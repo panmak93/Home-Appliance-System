@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> XYZ Company
+</title>
+<link rel="stylesheet" href="css/HeatingPageLayout.css">
+
+<!-- jQuery library (served from Google) -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<!-- bxSlider Javascript file -->
+<script src="js/jquery.bxslider.min.js"></script>
+<!-- bxSlider CSS file -->
+<link href="css/jquery.bxslider.css" rel="stylesheet" />
+
+<script>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+	
+function getTime(){
+	var d = new Date();
+	var h = d.getHours();
+	var m = d.getMinutes();
+	document.getElementById("time").innerHTML = h+":"+(m < 10 ? "0" + m : m);
+	}
+	
+setInterval("getTime()", 1000);
+
+function logout(){
+	confirm("Are you sure you want to Logout?");
+	}
+
+</script>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+
+<script>
+if(typeof(Storage) !== "undefined") {
+	if(sessionStorage.getItem('curr_temp_var') == null){
+		sessionStorage.setItem('curr_temp_var', '15');
+	}
+	
+	if(sessionStorage.getItem('mode') == null){
+		sessionStorage.setItem('mode', '1');
+	}
+	
+	curr_temp = sessionStorage.getItem('curr_temp_var');
+	
+	function displaycurrTemp(){
+		document.getElementById("curr_temp").innerHTML = curr_temp;
+		}
+
+	setInterval("displaycurrTemp()", 0010);
+
+	function changeTemp(element){
+			var id = element.id;
+			if(id == "hotter"){
+				if(curr_temp < 30){
+					curr_temp++;
+				}
+				else{
+					window.alert("Systems Error: Too hot");
+				}
+			}else{
+				if(curr_temp > 10){
+					curr_temp--;
+				}
+				else{
+					window.alert("Systems Error: Too cool");
+				}
+			}	
+		sessionStorage.setItem('curr_temp_var', JSON.stringify(curr_temp));
+		}
+	
+	function switchmode(button){
+		if(button.id == 'button1'){
+			button.style.background = 'rgba(197,197,197,0.9)';
+			document.getElementById('button2').style.background = 'rgba(43,0,0,0.7)';
+			document.getElementById('button3').style.background = 'rgba(0,20,43,0.7)';
+			document.getElementById('button4').style.background = 'rgba(43,25,0,0.7)';
+			sessionStorage.setItem('mode', '1');			
+		}else if(button.id == 'button2'){
+			button.style.background = 'rgba(201,0,0,0.9)';
+			document.getElementById('button1').style.background = 'rgba(30,30,30,0.7)';
+			document.getElementById('button3').style.background = 'rgba(0,20,43,0.7)';
+			document.getElementById('button4').style.background = 'rgba(43,25,0,0.7)';
+			sessionStorage.setItem('mode', '2');
+		}else if(button.id == 'button3'){
+			button.style.background = 'rgba(0,213,255,0.9)';
+			document.getElementById('button2').style.background = 'rgba(43,0,0,0.7)';
+			document.getElementById('button1').style.background = 'rgba(30,30,30,0.7)';
+			document.getElementById('button4').style.background = 'rgba(43,25,0,0.7)';
+			sessionStorage.setItem('mode', '3');
+		}else{
+			button.style.background = 'rgba(255,172,17,0.9)';
+			document.getElementById('button2').style.background = 'rgba(43,0,0,0.7)';
+			document.getElementById('button3').style.background = 'rgba(0,20,43,0.7)';
+			document.getElementById('button1').style.background = 'rgba(30,30,30,0.7)';
+			sessionStorage.setItem('mode', '4');
+		}
+	}
+	
+	function colormode(){
+		if(sessionStorage.getItem('mode') == '1'){
+			switchmode(document.getElementById('button1'));
+		}else if(sessionStorage.getItem('mode') == '2'){
+			switchmode(document.getElementById('button2'));
+		}else if(sessionStorage.getItem('mode') == '3'){
+			switchmode(document.getElementById('button3'));
+		}else{
+			switchmode(document.getElementById('button4'));
+		}
+	}
+	setTimeout(colormode,0100);
+	} else {
+}
+
+</script>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+
+</head>
+<body>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+<div id="topbar">
+
+<a href="HTML_Home.html" ><img src="images/XYZ_VB.png" width="108" height="108" id="logo"></a>
+<a href="HTML_Home.html"><h1 id="heading" style="color: white;">Home Automation System</h1></a>
+
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="timeandconnection">
+Local time : 
+<div id="time">
+</div>
+Connection :
+<img src="images/wireless-signal-interface-status-symbol-of-bars-group.png" width="25" height="20">
+</div>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="loginstatus" height = "108">
+<div id="welcomemessage">
+Welcome Back! Steven
+</br>
+
+<table>
+<tr>
+<td width="100px" style="border-right: 1px solid #C6C6C6;" ><a href="">Account Info</a></td>
+<td><a href="">Help</a></td>
+</tr>
+</table>
+
+</div>
+<button id="logoutbutton" onclick="logout()"> LogOut </button>
+</div>
+
+</div>
+</br>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+<div id="mainscreen">
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<ul class="nav">
+  <li><a href="">Surveillance</a></li>
+  <li><a href="">Security</a></li>
+  <li><a href="">Energy</a></li>
+  <li><a href="HTML_Lighting.html">Lighting</a></li>
+  <li><a class="selected" disabled>Heating</a></li>
+  <li><a href="">Settings</a></li>
+</ul>
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="contentbg">
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="selectionscreen">
+
+<div id="tabs">
+<ul>
+<li class="selected">General Settings</li>
+<li>Rooms Settings
+<ul>
+<li>Living Room</li>
+<li>Dinning Room</li>
+<li>Master Bedroom</li>
+<li>Bedroom 1</li>
+<li>Bedroom 2</li>
+</li>
+</ul>
+</div>
+
+</div>
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="leftscreen">
+
+</br>
+<div id="tempdiv">
+<text id="curr_temp"></text><text id = "temp">&deg;C</text><br><text id = "description">House temperature</text>
+</div>
+
+<div id="humidlevel">
+<text id= "humidity">45%</text><br><text id = "description">Humidity</text>
+</div>
+<div id="up">
+<a id = "hotter" onclick="changeTemp(document.getElementById('hotter'))" style="cursor: pointer;"><img id="u" src="./images/up-arrow-in-circle-outline.png" width ="70" height="70" onmouseover="this.src='./images/up-arrow-in-circle-outline_HOVER.png';" onmouseout="this.src='./images/up-arrow-in-circle-outline.png';" onmousedown="this.src='./images/up-arrow-in-circle-outline_CLICK.png';" onmouseup="this.src='./images/up-arrow-in-circle-outline_HOVER.png';"></a>
+</div>
+<div id="down">
+<a id = "cooler" onclick="changeTemp(document.getElementById('cooler'))" style="cursor: pointer;"><img id="d" src="./images/down-arrow-in-circular-outlined-button.png" width ="70" height="70" onmouseover="this.src='./images/down-arrow-in-circular-outlined-button_HOVER.png';" onmouseout="this.src='./images/down-arrow-in-circular-outlined-button.png';" onmousedown="this.src='./images/down-arrow-in-circular-outlined-button_CLICK.png';" onmouseup="this.src='./images/down-arrow-in-circular-outlined-button_HOVER.png';"></a>
+</div>
+</div>
+
+<div id="leftscreenbottom">
+	<text id="mode">Mode</text>
+	<a onclick="switchmode(getElementById('button1'))"><button id="button1">AUTO</button></a>
+	<a onclick="switchmode(getElementById('button2'))"><button id="button2">HEAT</button></a>
+	<a onclick="switchmode(getElementById('button3'))"><button id="button3">COOL</button></a>
+	<a onclick="switchmode(getElementById('button4'))"><button id="button4">DRY</button></a>
+</div>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+<div id="rightscreen">
+<div id="checkboxes">
+<input type="checkbox" name="generalautolighting" value="On" disabled> Auto</input>
+</div>
+<br>
+<br>
+<img src="./images/up-arrow-in-circle-outline_DISABLED.png" width="45px" height="45px" id="up_disabled"><img>
+<img src="./images/down-arrow-in-circular-outlined-button_DISABLED.png" width="45px" height="45px" id="down_disabled"><img>
+
+<text id = "targettemp">24&deg;C</text><br><text id = "description">Targeted temperature</text>
+<div id="start_end">
+<br>
+<br>
+Start time: <input type="text" value="24/06/2016 10:30PM" disabled></input> <img src="./images/calendar.png" width="25px" height="25px" style="margin-left:2px; position:relative; top:5px"></img>
+<br>
+<br>
+End time: <input type="text" value="25/06/2016 8:30AM" disabled></input> <img src="./images/calendar.png" width="25px" height="25px" style="margin-left:2px; position:relative; top:5px"></img>
+</div>
+
+<div id="checkboxes" class="repeat">
+<input type="checkbox" name="generalautolighting" value="On" disabled> Repeat</input>
+</div>
+
+<div id="interval">
+<select id="intervals" disabled>
+  <option value="daily">daily</option>
+  <option value="weekly">weekly</option>
+  <option value="monthly">monthly</option>
+</select>
+</div>
+
+<div id="blindscontroltitle">
+Blinds Control:
+</div>
+
+<div id="blinds">
+<text style="position:absolute; left:-50px; top:1px; font-size:18px">Open</text>
+<input type="range" value="50" style="position:absolute; width:150px; left:20px" disabled>
+<text style="position:absolute; left:160px; top:1px; font-size:18px">Closed</text>
+</div>
+
+<div id="checkboxes" class="blindscontrol">
+<input type="checkbox" name="generalautolighting" value="On" disabled> Auto</input>
+</div>
+
+<div id="start_end" class="second">
+<br>
+<br>
+Open time: <input type="text" value="25/06/2016 8:30AM" disabled></input> <img src="./images/calendar.png" width="25px" height="25px" style="margin-left:2px; position:relative; top:5px"></img>
+<br>
+<br>
+Closed time: <input type="text" value="25/06/2016 10:30PM" disabled></input> <img src="./images/calendar.png" width="25px" height="25px" style="margin-left:2px; position:relative; top:5px"></img>
+</div>
+
+<div id="checkboxes" class="repeat2">
+<input type="checkbox" name="generalautolighting" value="On" disabled> Repeat</input>
+</div>
+
+<div id="interval" class="second">
+<select id="intervals" disabled>
+  <option value="daily">daily</option>
+  <option value="weekly">weekly</option>
+  <option value="monthly">monthly</option>
+</select>
+</div>
+
+</div>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+</div>
+</div>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+</body>
+</html>
+
+

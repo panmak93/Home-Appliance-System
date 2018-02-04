@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> XYZ Company
+</title>
+<link rel="stylesheet" href="css/LightingPageLayout.css">
+
+<script>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+	
+function getTime(){
+	var d = new Date();
+	var h = d.getHours();
+	var m = d.getMinutes();
+	document.getElementById("time").innerHTML = h+":"+(m < 10 ? "0" + m : m);
+	}
+	
+setInterval("getTime()", 1000);
+
+function logout(){
+	confirm("Are you sure you want to Logout?");
+	}
+
+function switchtab(element)  {
+    var tab_contents = document.getElementsByClassName('tab_content');
+    for (var i = 0; i < tab_contents.length; i++) { 
+        tab_contents[i].style.display = 'none';
+    }
+	
+    var tab = element.id.replace(/(\d)/g, '-$1');
+    document.getElementById(tab).style.display = 'block';
+	
+	if(element.id[4]==1){
+		document.getElementById('tabs1').style.background = 'rgba(255,255,255,0.1)';
+		document.getElementById('tabs2').style.background = 'rgba(0,0,0,0.5)';
+		document.getElementById('surroundingtab').style.background = 'rgba(0,0,0,0.5)';
+		document.getElementById('smallertabmenu').style.display = 'none';
+	}else{
+		document.getElementById('tabs1').style.background = 'rgba(0,0,0,0.5)';	
+		document.getElementById('tabs2').style.background = 'rgba(255,255,255,0.1)';
+		document.getElementById('surroundingtab').style.background = 'rgba(255,255,255,0.1)';
+		document.getElementById('smallertabmenu').style.display = 'block';
+	}
+}
+
+function load(){
+	switchtab(document.getElementById('tabs1'));
+	rangecheck();
+}
+
+
+</script>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+
+<script>
+if(typeof(Storage) !== "undefined") {
+
+	for(i=1; i < 6; i++){
+	if(sessionStorage.getItem('l'+ JSON.stringify(i)) == null){
+		sessionStorage.setItem('l' + JSON.stringify(i), 'false');
+		}
+	}
+	if(sessionStorage.getItem('g1') == null){
+		sessionStorage.setItem('g1', 'true');
+	}
+		
+    function switching(img) {
+		var id = img.id;
+		var mode = sessionStorage.getItem(id);
+		if (mode == 'false') {
+			img.src = './images/idea-and-creativity-symbol-of-a-lightbulb_ON.png';
+				sessionStorage.setItem(id, 'true');
+				if(id=='g1'){
+					for(i=1; i < 6; i++){
+						sessionStorage.setItem('l' + JSON.stringify(i), 'true');
+						console.log(sessionStorage.getItem('l' + JSON.stringify(i)));
+					}
+				}
+			} else {
+			img.src = './images/idea-and-creativity-symbol-of-a-lightbulb.png';
+				sessionStorage.setItem(id, 'false');
+				if(id=='g1'){
+					for(i=1; i < 6; i++){
+						sessionStorage.setItem('l' + JSON.stringify(i), 'false');
+					}
+				}
+			}		
+	}	
+	
+	function switchcheck(){
+			var mode1 = sessionStorage.getItem('g1');
+			var mode2 = sessionStorage.getItem('l3');
+			if (mode1 == 'false') {
+				document.getElementById('g1').src = './images/idea-and-creativity-symbol-of-a-lightbulb.png';
+			} else {
+				document.getElementById('g1').src = './images/idea-and-creativity-symbol-of-a-lightbulb_ON.png';
+			}
+			if (mode2 == 'false') {
+				document.getElementById('l3').src = './images/idea-and-creativity-symbol-of-a-lightbulb.png';
+			} else {
+				document.getElementById('l3').src = './images/idea-and-creativity-symbol-of-a-lightbulb_ON.png';
+			}
+	}
+	setInterval("switchcheck()", 0010);
+
+	function switchrange(input){
+			sessionStorage.setItem(input.id, input.value);
+			if(input.id == 'g_1'){
+				sessionStorage.setItem('l_1', input.value);
+				
+			}
+		}
+		
+	function rangecheck(){
+		if(document.getElementById('g_1')!=null){
+			document.getElementById('g_1').value = sessionStorage.getItem('g_1');
+		}
+		if(document.getElementById('l_1')!=null){
+			document.getElementById('l_1').value = sessionStorage.getItem('l_1');
+		}
+		
+	}
+	} else {
+}
+
+</script>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+
+</head>
+<body  onload="load()">
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+<div id="topbar">
+
+<a href="HTML_Home.html" ><img src="images/XYZ_VB.png" width="108" height="108" id="logo"></a>
+<a href="HTML_Home.html"><h1 id="heading" style="color: white;">Home Automation System</h1></a>
+
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="timeandconnection">
+Local time : 
+<div id="time">
+</div>
+Connection :
+<img src="images/wireless-signal-interface-status-symbol-of-bars-group.png" width="25" height="20">
+</div>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="loginstatus" height = "108">
+<div id="welcomemessage">
+Welcome Back! Steven
+</br>
+
+<table>
+<tr>
+<td width="100px" style="border-right: 1px solid #C6C6C6;" ><a href="">Account Info</a></td>
+<td><a href="">Help</a></td>
+</tr>
+</table>
+
+</div>
+<button id="logoutbutton" onclick="logout()"> LogOut </button>
+</div>
+
+</div>
+</br>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+<div id="mainscreen">
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<ul class="nav">
+  <li><a href="">Surveillance</a></li>
+  <li><a href="">Security</a></li>
+  <li><a href="">Energy</a></li>
+  <li><a class="selected" disabled>Lighting</a></li>
+  <li><a href="HTML_Heating.html">Heating</a></li>
+  <li><a href="">Settings</a></li>
+</ul>
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="contentbg">
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="selectionscreen">
+
+<div id="tabs">
+<ul>
+<li id="tabs1" onclick="switchtab(this)" class="general">General Settings</li>
+<li id ="surroundingtab" onmouseover="document.getElementById('smallertabmenu').style.display = 'block';">Rooms Settings
+<ul id="smallertabmenu">
+<li>Living Room</li>
+<li>Dinning Room</li>
+<li id="tabs2" onclick="switchtab(this);rangecheck()" class="master">Master Bedroom</a></li>
+<li>Bedroom 1</li>
+<li>Bedroom 2</li>
+</li>
+</ul>
+</div>
+
+</div>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="tabs-1" class="tab_content">
+<p style="text-align:left; text-indent:100px;">Toggle On/Off:</p>
+<a onclick="switching(document.getElementById('g1'))" style="cursor: pointer;"><img id="g1" src="images/idea-and-creativity-symbol-of-a-lightbulb.png" height="200" width="200"></img></a>
+<div id="brightnessblock">
+<text style="position:absolute; left:-50px; top:20px; font-size:15px; color:#B0B0B0;">Min</text>
+Brightness:</br>
+<input id="g_1" type="range" value="" min="0" max="100" step="20" style="position:absolute; width:380px; left:20px" onchange="switchrange(getElementById('g_1'))" list=tickmarks></input>
+<datalist id=tickmarks>
+<option>0</option>
+<option>20</option>
+<option>40</option>
+<option>60</option>
+<option>80</option>
+<option>100</option>
+</datalist>
+<text style="position:absolute; left:400px; top:20px; font-size:15px; color:yellow;">Max</text>
+</div>
+
+<div id="individuallights" style="color:grey;">
+Individual lightbulbs settings:
+</div>
+
+<p style="position:absolute; text-align:left; top:57%; color:grey;">Toggle On/Off:</p>
+
+<img src="./images/left-chevron.png" height="40" width="40" id="left"></img>
+<img src="./images/right-chevron.png" height="40" width="40" id="right"></img>
+<img src="./images/idea-and-creativity-symbol-of-a-lightbulb.png" height="150" width="150" id="indivicon" class="second"></img>
+
+<div id="durability" style="color:grey;">
+Durability: 50%
+</div>
+
+<div id="brightnessblock" class="second">
+Brightness:</br>
+<text style="position:absolute; left:-50px; top:20px; font-size:15px; color:#B0B0B0;">Min</text>
+<input id="g_2" type="range" value="20" min="0" max="100" step="20" style="position:absolute; width:380px; left:20px"list=tickmarks disabled></input>
+<datalist id=tickmarks>
+<option>0</option>
+<option>20</option>
+<option>40</option>
+<option>60</option>
+<option>80</option>
+<option>100</option>
+</datalist>
+<text style="position:absolute; left:400px; top:20px; font-size:15px; color:#616100;">Max</text>
+</div>
+
+</div>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="tabs-2" class="tab_content">
+
+<p style="text-align:left; text-indent:100px;">Toggle On/Off:</p>
+
+<a onclick="switching(document.getElementById('l3'))" style="cursor: pointer;"><img id="l3" src="images/idea-and-creativity-symbol-of-a-lightbulb.png" height="200" width="200"></img></a>
+
+<div id="brightnessblock">
+Brightness:</br>
+<text style="position:absolute; left:-50px; top:20px; font-size:15px; color:#B0B0B0;">Min</text>
+<input id="l_1" type="range" value="" min="0" max="100" step="20" style="position:absolute; width:380px; left:20px" onchange="switchrange(getElementById('l_1'))" list=tickmarks></input>
+<datalist id=tickmarks>
+<option>0</option>
+<option>20</option>
+<option>40</option>
+<option>60</option>
+<option>80</option>
+<option>100</option>
+</datalist>
+<text style="position:absolute; left:400px; top:20px; font-size:15px; color:#FFFF00;">Max</text>
+</div>
+
+<div id="individuallights" style="color:grey;">
+Individual lightbulbs settings:
+</div>
+
+<p style="position:absolute; text-align:left; top:57%; color:grey;">Toggle On/Off:</p>
+
+<img src="./images/left-chevron.png" height="40" width="40" id="left"></img>
+<img src="./images/right-chevron.png" height="40" width="40" id="right"></img>
+<img src="./images/idea-and-creativity-symbol-of-a-lightbulb.png" height="150" width="150" id="indivicon" class="second"></img>
+
+<div id="durability" style="color:grey;">
+Durability: 50%
+</div>
+
+<div id="brightnessblock" class="second">
+Brightness:</br>
+<text style="position:absolute; left:-50px; top:20px; font-size:15px; color:#B0B0B0;">Min</text>
+<input id="l_2" type="range" value="60" min="0" max="100" step="20" style="position:absolute; width:380px; left:20px"list=tickmarks disabled></input>
+<datalist id=tickmarks>
+<option>0</option>
+<option>20</option>
+<option>40</option>
+<option>60</option>
+<option>80</option>
+<option>100</option>
+</datalist>
+<text style="position:absolute; left:400px; top:20px; font-size:15px; color:#616100;">Max</text>
+</div>
+
+</div>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+<div id="rightscreen">
+<div id="checkboxes">
+<input type="checkbox" name="generalautolighting" value="On" disabled> Auto</input>
+</div>
+<p style="text-align:left; text-indent:100px; color:grey; top:20px; position:absolute;">Toggle On/Off:</p>
+<br>
+<br>
+<img src="./images/idea-and-creativity-symbol-of-a-lightbulb.png" height="150" width="150" id="indivicon" class="third"></img>
+<div id="brightnessblock" class="third">
+Brightness:</br>
+<text style="position:absolute; left:-50px; top:20px; font-size:15px; color:#B0B0B0;">Min</text>
+<input id="g_2" type="range" value="0" min="0" max="100" step="20" style="position:absolute; width:380px; left:20px"list=tickmarks disabled></input>
+<datalist id=tickmarks>
+<option>0</option>
+<option>20</option>
+<option>40</option>
+<option>60</option>
+<option>80</option>
+<option>100</option>
+</datalist>
+<text style="position:absolute; left:400px; top:20px; font-size:15px; color:#616100;">Max</text>
+</div>
+<text id = "description">Targeted brightness</text>
+<div id="start_end">
+
+<br>
+Start time: <input type="text" value="24/06/2016 7:30PM" disabled></input> <img src="./images/calendar.png" width="25px" height="25px" style="margin-left:2px; position:relative; top:5px"></img>
+<br>
+<br>
+End time: <input type="text" value="24/06/2016 10:30PM" disabled></input> <img src="./images/calendar.png" width="25px" height="25px" style="margin-left:2px; position:relative; top:5px"></img>
+</div>
+
+<div id="checkboxes" class="repeat">
+<input type="checkbox" name="generalautolighting" value="On" disabled> Repeat</input>
+</div>
+
+<div id="interval">
+<select id="intervals" disabled>
+  <option value="daily">daily</option>
+  <option value="weekly">weekly</option>
+  <option value="monthly">monthly</option>
+</select>
+</div>
+
+</div>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+</div>
+</div>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+</body>
+</html>

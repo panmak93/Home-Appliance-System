@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> XYZ Company
+</title>
+<link rel="stylesheet" href="css/HomePageLayout.css">
+
+<!-- jQuery library (served from Google) -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<!-- bxSlider Javascript file -->
+<script src="js/jquery.bxslider.min.js"></script>
+<!-- bxSlider CSS file -->
+<link href="css/jquery.bxslider.css" rel="stylesheet" />
+
+<script>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+	
+function getTime(){
+	var d = new Date();
+	var h = d.getHours();
+	var m = d.getMinutes();
+	document.getElementById("time").innerHTML = h+":"+(m < 10 ? "0" + m : m);
+	}
+	
+setInterval("getTime()", 1000);
+
+function logout(){
+	confirm("Are you sure you want to Logout?");
+	}
+
+Alarm = function(bool){
+	var check = document.getElementById("devices");
+	
+	if(bool.checked == true)
+	{
+		check.disabled = false;
+	}
+	else
+	{
+		check.disabled = true;
+	}
+}
+
+function load(){
+	if(document.getElementById('g_1h')!=null){
+		document.getElementById('g_1h').value = sessionStorage.getItem('g_1');
+	}
+}
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+
+$(document).ready(function(){
+  $('.surveillanceslider').bxSlider({
+    slideWidth: 80,
+    minSlides: 1,
+    maxSlides: 3,
+    slideMargin: 40,
+    moveSlides: 1,
+	infiniteLoop: false,
+	adaptiveHeight:true
+  });
+});
+
+$(document).ready(function(){
+  $('.lightingslider').bxSlider({
+    slideWidth: 80,
+    minSlides: 1,
+    maxSlides: 3,
+    slideMargin: 40,
+    moveSlides: 1,
+	infiniteLoop: false,
+	adaptiveHeight:true
+  });
+});
+
+$(document).ready(function(){
+  $('.securityslider').bxSlider({
+    slideWidth: 100,
+    minSlides: 1,
+    maxSlides: 3,
+    slideMargin: 20,
+	infiniteLoop: false,
+	adaptiveHeight:true
+  });
+});
+
+</script>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+
+<script>
+if(typeof(Storage) !== "undefined") {
+
+	for(i=1; i < 6; i++){
+		if(sessionStorage.getItem('l'+ JSON.stringify(i)) == null){
+				sessionStorage.setItem('l' + JSON.stringify(i), 'true');	
+			}
+	}
+	
+	if(sessionStorage.getItem('curr_temp_var') == null){
+		sessionStorage.setItem('curr_temp_var', '15');
+	}
+	
+	if(sessionStorage.getItem('mode') == null){
+		sessionStorage.setItem('mode', '1');
+	}
+	
+	function displaycurrTemp(){
+			document.getElementById("curr_temp").innerHTML = sessionStorage.getItem('curr_temp_var');
+		}
+
+	setInterval("displaycurrTemp()", 0010);
+	
+    function switching(img) {
+		var id = img.id;
+		var mode = sessionStorage.getItem(id);
+		if(id[0] == 'l'){
+			lighting(mode, img, id);
+		}
+		
+		
+		function lighting(lighton, img, id){
+			if (lighton == 'false') {
+			img.src = './images/light-bulb_ON.png';
+				sessionStorage.setItem(id, 'true');
+			} else {
+			img.src = './images/light-bulb_OFF.png';
+				sessionStorage.setItem(id, 'false');
+			}		
+		}		
+	}
+	
+	function switchcheck(){
+		for(i=1; i < 6; i++){
+			var mode1 = sessionStorage.getItem('l'+ JSON.stringify(i));
+			if (mode1 == 'false') {
+				document.getElementById('l'+ JSON.stringify(i)).src = './images/light-bulb_OFF.png';
+			} else {
+				document.getElementById('l'+ JSON.stringify(i)).src = './images/light-bulb_ON.png';
+			}
+		}
+	}
+
+	setInterval("switchcheck()", 0010);
+	
+	function colormode(){
+		if(sessionStorage.getItem('mode') == '1'){
+			document.getElementById('temp_mode').style.background = 'rgba(197,197,197,0.7)';
+			document.getElementById('temp_mode').innerHTML="AUTO";
+		}else if(sessionStorage.getItem('mode') == '2'){
+			document.getElementById('temp_mode').style.background = 'rgba(201,0,0,0.7)';
+			document.getElementById('temp_mode').innerHTML="HEAT";
+		}else if(sessionStorage.getItem('mode') == '3'){
+			document.getElementById('temp_mode').style.background = 'rgba(0,213,255,0.7)';
+			document.getElementById('temp_mode').innerHTML="COOL";
+		}else{
+			document.getElementById('temp_mode').style.background = 'rgba(255,172,17,0.7)';
+			document.getElementById('temp_mode').innerHTML="DRY";
+		}
+	}
+	setTimeout(colormode,0010);
+	
+} else {
+}
+
+	
+</script>
+</head>
+<body onload="load()">
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+<div id="topbar">
+
+<a href="HTML_Home.html"><img src="images/XYZ_VB.png" width="108" height="108" id="logo"></a>
+<a href="HTML_Home.html"><h1 id="heading" style="color: white;">Home Automation System</h1></a>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="timeandconnection">
+Local time : 
+<div id="time">
+</div>
+Connection :
+<img src="images/wireless-signal-interface-status-symbol-of-bars-group.png" width="25" height="20">
+</div>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<div id="loginstatus" height = "108">
+<div id="welcomemessage">
+Welcome Back! Steven
+</br>
+
+<table>
+<tr>
+<td width="100px" style="border-right: 1px solid #C6C6C6;" ><a href="">Account Info</a></td>
+<td><a href="">Help</a></td>
+</tr>
+</table>
+
+</div>
+<button id="logoutbutton" onclick="logout()"> LogOut </button>
+</div>
+
+</div>
+</br>
+
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+<div id="mainscreen">
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<button id="surveillancebutton"><img src="images/surveillance-video-camera.png" width ="205" height="200" style="cursor: pointer;"></img></button>
+<div id="surveillancetext">
+<h2>Surveillance</h2>
+<div style="position:absolute; left:20px;top:50px;"> status: </div>
+<div id="sliderpos" >
+<div class="surveillanceslider"  style="text-indent: 5px; font-size:12px;">
+	<div class="slide" title="Front Door"><img id="r1" src="./images/video-camera_ON.png" width ="70" height="70"><figcaption>Front Door</figcaption></div>
+	<div class="slide" title="Front Yard"><img id="r2" src="./images/video-camera_OFF.png" width ="70" height="70"><figcaption>Front Yard</figcaption></div>
+	<div class="slide" title="Back Yard"><img id="r3" src="./images/video-camera_ON.png" width ="70" height="70"><figcaption>Back Yard</figcaption></div>
+	<div class="slide" title="Living Room"><img id="r4" src="./images/video-camera_OFF.png" width ="70" height="70"><figcaption>Living Room</figcaption></div>
+	<div class="slide" title="Dinning Room"><img id="r5" src="./images/video-camera_OFF.png" width ="70" height="70"><figcaption>Dinning Room</figcaption></div>
+</div>
+</div>
+
+<div id="autorecord">
+<input type="checkbox" name="autorecord" value="On" checked disabled> General Sensor Unlock</input><br>
+</div>
+
+
+</div>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<a href = "HTML_Lighting.html"><button id="lightingbutton" ><img src="images/lighting-bulb.png" width ="190" height="180" style="cursor: pointer;"></img></button></a>
+<div id="lightingtext">
+<h2>Lighting</h2>
+
+<div style="position:absolute; left:20px;top:50px;"> status: </div>
+<div id="sliderpos">
+<div class="lightingslider"  style="text-indent: 14px; font-size:12px;">
+	<div class="slide" title="Living Room"><a onclick="switching(document.getElementById('l1'))" style="cursor: pointer;"><img id="l1" src="./images/light-bulb_ON.png" width ="60" height="60"></a><figcaption>Living</figcaption></div>
+	<div class="slide" title="Dinning Room"><a onclick="switching(document.getElementById('l2'))" style="cursor: pointer;"><img id="l2" src="./images/light-bulb_ON.png" width ="60" height="60"></a><figcaption>Dinning</figcaption></div>
+	<div class="slide" title="Master Bedroom"><a onclick="switching(document.getElementById('l3'))" style="cursor: pointer;"><img id="l3" src="./images/light-bulb_ON.png" width ="60" height="60"></a><figcaption>Master</figcaption></div>
+	<div class="slide" title="Bedroom 1"><a onclick="switching(document.getElementById('l4'))" style="cursor: pointer;"><img id="l4" src="./images/light-bulb_ON.png" width ="60" height="60"></a><figcaption>Bed 1</figcaption></div>
+	<div class="slide" title="Bedroom 2"><a onclick="switching(document.getElementById('l5'))" style="cursor: pointer;"><img id="l5" src="./images/light-bulb_ON.png" width ="60" height="60"></a><figcaption>Bed 2</figcaption></div>
+</div>
+</div>
+
+<div id="generalautolighting">
+<input type="checkbox" name="generalautolighting" value="On" disabled> General Auto On/Off</input><br>
+</div>
+
+<div id="brightnessblock">
+General Brightness:</br>
+<input id = "g_1h" type="range" value="50" style="position:absolute; width:380px; left:20px" disabled>
+</div>
+
+</div>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<button id="securitybutton" ><img src="images/locked-padlock.png" width ="190" height="180" style="cursor: pointer;"></img></button>
+<div id="securitytext">
+<h2>Security</h2>
+
+<div style="position:absolute; left:20px;top:50px;"> status: </div>
+<div id="sliderpos" style="left:60px;">
+<div class="securityslider"  style="text-indent: 18px; font-size:12px;">
+	<div class="slide" title="Garage"><img id="s1" src="./images/closed-lock_ON.png" width ="80" height="80"><figcaption>Garage</figcaption></div>
+	<div class="slide" title="Front Door"><img id="s2" src="./images/closed-lock_ON.png" width ="80" height="80"><figcaption>Front Door</figcaption></div>
+	<div class="slide" title="Garden"><img id="s3" src="./images/closed-lock_ON.png" width ="80" height="80"><figcaption>Garden</figcaption></div>
+</div>
+</div>
+
+<div id="alarmalert">
+<input type="checkbox" name="alarmalert" value="On" onClick="Alarm(this)" disabled> Alarm Alert</input><br>
+</div>
+
+<div id="device">
+<select id="devices" disabled>
+  <option value="mobile">mobile</option>
+  <option value="text">text</option>
+  <option value="email">email</option>
+</select>
+</div>
+
+<div id="autosensorunlock">
+<input type="checkbox" name="autosensorunlock" value="On" checked disabled> General Auto Record</input><br>
+</div>
+
+</div>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<a href = "HTML_Heating.html"><button id="heatingbutton" ><img src="images/thermometer.png" width ="190" height="180" style="cursor: pointer;"></img></button></a>
+<div id="heatingtext">
+<h2>Heating</h2>
+
+<div id="tempdiv">
+<text id="curr_temp"></text><text id = "temp">&deg;C </text><br><text id = "description">House temperature</text>
+</div>
+
+<div id="humiditydiv">
+<text id = "humidity">45% </text><br><text id = "description2"> Humidity</text>
+</div>
+
+<div id="temp_mode">HOTTT
+</div>
+<br><text id = "description3">Mode:</text>
+
+</div>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<button id="energybutton" ><img src="images/ecological-energy-plug-symbol-with-cord-and-a-leaf.png" width ="190" height="180" style="cursor: pointer;"></img></button>
+<div id="energytext">
+<h2>Energy</h2>
+
+<table style="margin-top:10px; margin-left:20px;">
+<tr>
+<td width="330" height="25">Monthly Usage:</td>
+<td>487Kwh</td>
+</tr>
+<tr>
+<td>Upcoming Bill:</td>
+<td>$76.59</td>
+</tr>
+</table>
+
+<div id="ecomode">
+<input type="checkbox" name="ecomode" value="On" disabled> Eco Mode<br>
+</div>
+</div>
+
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<button id="settingbutton" ><img src="images/settings-gears.png " width ="190" height="180" style="cursor: pointer;"></img></button>
+<div id="settingtext">
+<h2>Setting</h2>	
+
+<p>
+Time Settings
+</p>
+<p>
+Connection Settings
+</p>
+<p>
+Account Settings
+</p>
+
+</div>
+
+</div>
+<!------------------------------------------------------------------------------------------------------------------------------------------------------>
+</body>
+</html>
+
+
